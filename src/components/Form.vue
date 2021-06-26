@@ -16,7 +16,9 @@
       prop="phone">
       <el-input
         v-model="form.phone"
-        type="number"/>
+        type="number">
+        <template slot="prepend">+7</template>
+      </el-input>
     </el-form-item>
 
     <el-form-item label="Начальник">
@@ -59,7 +61,7 @@ export default {
         ],
         phone: [
           {required: true, message: 'Пожалуйста, введите телефон', trigger: 'blur'},
-          {min: 11, max: 11, message: 'Номер телефона должен содержать 11 цифр', trigger: 'blur'}
+          {min: 10, max: 10, message: 'Номер телефона должен содержать 11 цифр', trigger: 'blur'}
         ]
       }
     }
@@ -72,12 +74,22 @@ export default {
         if (valid) {
           this.$emit('submit', {
             name: this.form.name,
-            phone: this.form.phone
+            phone: this.transformNumber(this.form.phone)
           })
+
+          /* Обнуляем значения form */
+          for (let prop in this.form) {
+            this.form[prop] = ''
+          }
         } else {
           return false
         }
       })
+    },
+
+    /* Трансформация номера перед отравкой в Table.vue */
+    transformNumber (number) {
+      return '+7' + ' ' + number.slice(0, 3) + ' ' + number.slice(3, 6) + ' ' + number.slice(6, 8) + ' ' + number.slice(8, 10)
     }
   }
 }
