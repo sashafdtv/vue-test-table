@@ -14,7 +14,9 @@
     <el-form-item
       label="Телефон"
       prop="phone">
-      <el-input v-model="form.phone"/>
+      <el-input
+        v-model="form.phone"
+        type="number"/>
     </el-form-item>
 
     <el-form-item label="Начальник">
@@ -57,7 +59,7 @@ export default {
         ],
         phone: [
           {required: true, message: 'Пожалуйста, введите телефон', trigger: 'blur'},
-          {validator: this.validateNumber, trigger: 'blur'}
+          {min: 11, max: 11, message: 'Номер телефона должен содержать 11 цифр', trigger: 'blur'}
         ]
       }
     }
@@ -76,28 +78,22 @@ export default {
           return false
         }
       })
-    },
-
-    /* Валидация вводимого в форму номера телефона */
-    validateNumber (rule, value, callback) {
-      if (
-        (value.length === 12 && value[0] !== '+') ||
-        value.length > 12 ||
-        value.length < 11
-      ) {
-        callback(new Error('Пожалуйста, введите корректный номер телефона'))
-      } else {
-        callback()
-      }
     }
   }
 }
 </script>
 
 <style>
-  .button-wrapper {
+.button-wrapper {
   width: 100%;
   display: flex;
   justify-content: center;
+}
+
+/* Скрываем стандартные контролы инпута с type="number" */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 </style>
