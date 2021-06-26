@@ -12,6 +12,10 @@
         label="Телефон"
         width="300"/>
     </el-table>
+
+    <div class="button-wrapper">
+      <el-button type="primary">Добавить</el-button>
+    </div>
   </section>
 </template>
 
@@ -39,4 +43,15 @@ export default {
 </script>
 
 <style scoped>
+
+.el-table {
+  margin-bottom: 30px;
+  border: 1px solid #EBEEF5
+}
+
+.button-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
 </style>
