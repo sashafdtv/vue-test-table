@@ -1,5 +1,6 @@
 <template>
   <section>
+    <!-- Таблица -->
     <el-table
       :data="tableData"
       style="width: 100%">
@@ -13,17 +14,29 @@
         width="300"/>
     </el-table>
 
+    <!-- Кнопка добавления  -->
     <div class="button-wrapper">
-      <el-button type="primary">Добавить</el-button>
+      <el-button
+        type="primary"
+        @click="toggleModal = true">Добавить</el-button>
     </div>
+
+    <!-- Компонент модалки -->
+    <Modal :toggle-modal="toggleModal"/>
   </section>
 </template>
 
 <script>
+import Modal from './Modal.vue'
+
 export default {
   name: 'Table',
+  components: {
+    Modal
+  },
   data () {
     return {
+      toggleModal: false,
       tableData: [{
         name: 'Марина',
         phone: '+7 941 123 21 42'
