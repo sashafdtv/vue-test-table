@@ -2,6 +2,10 @@
   <div id="app">
     <img src="./assets/logo.png">
     <HelloWorld/>
+
+    <el-button
+      type="primary"
+      icon="el-icon-edit">Value</el-button>
   </div>
 </template>
 
