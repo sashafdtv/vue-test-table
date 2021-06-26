@@ -18,25 +18,32 @@
     <div class="button-wrapper">
       <el-button
         type="primary"
-        @click="toggleModal = true">Добавить</el-button>
+        @click="changeModalVisibility">Добавить</el-button>
     </div>
 
-    <!-- Компонент модалки -->
-    <Modal :toggle-modal="toggleModal"/>
+    <!-- Модалка -->
+    <el-dialog
+      :visible.sync="visibleModal"
+      title="Добавление пользователя">
+      <Form
+        @submit="addUser"
+      />
+    </el-dialog>
+
   </section>
 </template>
 
 <script>
-import Modal from './Modal.vue'
+import Form from './Form.vue'
 
 export default {
   name: 'Table',
   components: {
-    Modal
+    Form
   },
   data () {
     return {
-      toggleModal: false,
+      visibleModal: false,
       tableData: [{
         name: 'Марина',
         phone: '+7 941 123 21 42'
@@ -50,6 +57,24 @@ export default {
         name: 'Борис',
         phone: '+7 941 123 21 42'
       }]
+    }
+  },
+
+  methods: {
+    /**
+     * @param {object} data
+     */
+    addUser (data) {
+      /* Закрываем модалку при сабмите */
+      this.visibleModal = false
+      return this.tableData.push(data)
+    },
+
+    /**
+     * Метод меняет видимость модалки (октрывает/закрывает)
+     */
+    changeModalVisibility () {
+      this.visibleModal = !this.visibleModal
     }
   }
 }
