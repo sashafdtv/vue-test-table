@@ -1,32 +1,29 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <HelloWorld/>
-
-    <el-button
-      type="primary"
-      icon="el-icon-edit">Value</el-button>
+    <Table/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
+import Table from './components/Table'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Table
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+
+body {
+  margin: 0;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
 </style>
