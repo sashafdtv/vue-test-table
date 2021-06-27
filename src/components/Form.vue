@@ -1,3 +1,4 @@
+
 <template>
   <el-form
     ref="form"
@@ -22,7 +23,15 @@
     </el-form-item>
 
     <el-form-item label="Начальник">
-      <el-input v-model="form.head"/>
+      <el-select
+        v-model="form.head"
+        placeholder="Выберите руководителя">
+        <el-option
+          v-for="item in headsList"
+          :key="item.id"
+          :label="item.name"
+          :value="item.id"/>
+      </el-select>
     </el-form-item>
 
     <div class="button-wrapper">
@@ -39,22 +48,28 @@
 <script>
 export default {
   name: 'Modal',
-  model: {
-    visibleModal: false
-  },
   props: {
     value: {
       type: Boolean,
       default: false
+    },
+
+    headsList: {
+      type: Object,
+      default () {
+        return {}
+      }
     }
   },
   data () {
     return {
+      /* Данные формы */
       form: {
         name: '',
         phone: '',
         head: ''
       },
+      /* Правила валидации */
       rules: {
         name: [
           {required: true, message: 'Пожалуйста, введите имя', trigger: 'blur'}
@@ -72,9 +87,12 @@ export default {
     onSubmit () {
       this.$refs['form'].validate(async (valid) => {
         if (valid) {
+          /* Отравка данных формы в Table.vue */
           this.$emit('submit', {
             name: this.form.name,
-            phone: this.transformNumber(this.form.phone)
+            phone: this.form.phone,
+            head: this.form.head,
+            children: []
           })
 
           /* Обнуляем значения form */
@@ -85,11 +103,6 @@ export default {
           return false
         }
       })
-    },
-
-    /* Трансформация номера перед отравкой в Table.vue */
-    transformNumber (number) {
-      return '+7' + ' ' + number.slice(0, 3) + ' ' + number.slice(3, 6) + ' ' + number.slice(6, 8) + ' ' + number.slice(8, 10)
     }
   }
 }
