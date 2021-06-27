@@ -29,7 +29,7 @@
       title="Добавление пользователя">
       <Form
         :headsList="tableData"
-        @submit="addUser"
+        @submit="submitHandler"
       />
     </el-dialog>
 
@@ -48,22 +48,22 @@ export default {
     return {
       visibleModal: false,
       tableData: [{
-        id: 1,
+        id: '1',
         name: 'Марина',
         phone: '+7 941 123 21 42',
         children: []
       }, {
-        id: 2,
+        id: '2',
         name: 'Петр',
         phone: '+7 941 123 21 42',
         children: []
       }, {
-        id: 3,
+        id: '3',
         name: 'Алексей',
         phone: '+7 941 123 21 42',
         children: []
       }, {
-        id: 4,
+        id: '4',
         name: 'Борис',
         phone: '+7 941 123 21 42',
         children: []
@@ -72,14 +72,24 @@ export default {
   },
 
   methods: {
+    /* Хэндлер сабмита формы */
+    submitHandler (data) {
+      /* После сабмита закрываем модалку */
+      this.changeModalVisibility()
+      this.addUser(data)
+    },
+
     /* Добавление нового пользователя */
     addUser (data) {
-      /* Добавляем необходимые данные для пользователя */
-      data.id = this.tableData.length + 1
+      /* Приводим телефон к нужному формату */
       data.phone = this.transformNumber(data.phone)
       if (data.head) {
-        this.tableData.find(user => user.id === data.head).children.push(data)
+        const headUser = this.tableData.find(user => user.id === data.head)
+        /* id дочернего юзера формируется с префиксом родельского */
+        data.id = headUser.id + '-' + (+headUser.children.length + 1)
+        return headUser.children.push(data)
       } else {
+        data.id = this.tableData.length + 1
         return this.tableData.push(data)
       }
     },

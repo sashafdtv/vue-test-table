@@ -54,9 +54,9 @@ export default {
     },
 
     headsList: {
-      type: Object,
+      type: Array,
       default () {
-        return {}
+        return []
       }
     }
   },
@@ -95,9 +95,9 @@ export default {
           })
 
           /* Обнуляем значения form */
-          for (let prop in this.form) {
-            this.form[prop] = ''
-          }
+          this.$refs['form'].$children.forEach(formItem => {
+            formItem.resetField()
+          })
         } else {
           return false
         }
