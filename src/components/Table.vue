@@ -98,7 +98,6 @@ export default {
 </script>
 
 <style scoped>
-
 .el-table {
   margin-bottom: 30px;
   border: 1px solid #EBEEF5
