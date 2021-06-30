@@ -17,9 +17,8 @@
       <Form
         :headsList="tableData"
         :close="closeHandler"
-        @submit="submitHandler">
-        />
-    </form></el-dialog>
+        @submit="submitHandler"/>
+    </el-dialog>
   </div>
 </template>
 
