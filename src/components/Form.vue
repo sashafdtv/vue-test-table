@@ -22,7 +22,10 @@
       </el-input>
     </el-form-item>
 
-    <el-form-item label="Начальник">
+    <el-form-item
+      label="Начальник"
+      prop="head"
+    >
       <el-select
         v-model="form.head"
         placeholder="Выберите руководителя">
@@ -89,29 +92,34 @@ export default {
           /* Отравка данных формы в Table.vue */
           this.$emit('submit', {
             name: this.form.name,
-            phone: this.form.phone,
+            phone: this.transformNumber(this.form.phone),
             head: this.form.head,
             children: []
           })
 
-          /* Обнуляем значения form */
-          this.$refs['form'].$children.forEach(formItem => {
-            formItem.resetField()
-          })
+          /* Закрываем модалку */
+          this.$attrs.close()
+
+          /* Очищаем форму */
+          this.$refs['form'].resetFields()
         } else {
           return false
         }
       })
+    },
+
+    /* Трансформация номера перед передачей данных вверх */
+    transformNumber (number) {
+      return '+7' + ' ' + number.slice(0, 3) + ' ' + number.slice(3, 6) + ' ' + number.slice(6, 8) + ' ' + number.slice(8, 10)
     }
   }
 }
 </script>
 
-<style>
-.button-wrapper {
+<style scoped>
+
+.el-select {
   width: 100%;
-  display: flex;
-  justify-content: center;
 }
 
 /* Скрываем стандартные контролы инпута с type="number" */
